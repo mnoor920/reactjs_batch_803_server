@@ -1,12 +1,33 @@
 import User from "../model/user_model.js";
 
+
+
+export const getUsers = async (request, response) => {
+    try {
+        const allUsers = await User.find({});
+        return response.status(200).json({
+            msg: 'All Users',
+            status: 1,
+            data: allUsers
+        });
+    } catch (error) {
+
+        return response.status(500).json(
+            {
+                msg: 'Users Request Failed',
+                status: 0,
+            }
+        );
+    }
+};
+
+
 export const SignUp = async (request, response) => {
     try {
         if (!request.body) {
             return response.status(400).json({ error: "Request body is missing or empty" });
         }
         const { first_name, last_name, email, password } = request.body;
-
         if (!first_name || !last_name || !email || !password) {
             return response.status(400).json({ error: "Missing required fields in the request body" });
         }
@@ -21,8 +42,6 @@ export const SignUp = async (request, response) => {
             password
         });
         await newUser.save();
-
-        // Return success message
         return response.status(200).json({ msg: 'User signed up successfully' });
     } catch (error) {
         // Log and handle errors
@@ -30,3 +49,5 @@ export const SignUp = async (request, response) => {
         return response.status(500).json({ error: "An error occurred while signing up user" });
     }
 };
+
+
