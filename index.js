@@ -4,6 +4,15 @@ import Router from './routes/route.js'
 import bodyParser from 'body-parser';
 import cors from 'cors';
 
+import path from 'path';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
+// Convert the current module's URL to a file path
+const __filename = fileURLToPath(import.meta.url);
+// Get the directory name from the file path
+const __dirname = dirname(__filename);
+
 
 const app = express()
 app.use(cors())
